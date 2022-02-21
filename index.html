@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+	<meta charset="UTF-8">
+	<title>koronamap.lt - Koronaviruso informacija Lietuvoje ir pasaulyje.</title>
+    <meta property="og:title" content="koronamap.lt - Koronaviruso informacija Lietuvoje ir pasaulyje.">
+	<meta name="description" content="koronamap.lt - Žemėlapis, vaizduojantis koronaviruso užfiksuotų atvejų skaičius Lietuvoje ir pasaulyje.">
+    <meta property="og:description" content="koronamap.lt - Žemėlapis, vaizduojantis koronaviruso užfiksuotų atvejų skaičius Lietuvoje ir pasaulyje.">
+	<meta name="author" content="Gvidas Ulozevičius">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta property="og:image" content="https://koronamap.lt/img/th.png" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+  		integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+  		crossorigin=""/>
+	<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+  		integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+  		crossorigin=""></script>
+  	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  	<link rel="stylesheet" href="css/leaflet-sidebar.css" />
+  	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-130974582-9"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-130974582-9');
+	</script>
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<script data-name="BMC-Widget" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="ORsPzax" data-description="Nupirkite man kavos." data-color="#FF813F" data-position="right" data-x_margin="15" data-y_margin="10"></script>
+    <script src="https://www.w3counter.com/tracker.js?id=131224"></script>
+</head>
+<body>
+	<div id="sidebar" class="sidebar collapsed">
+        <!-- Nav tabs -->
+        <div class="sidebar-tabs">
+            <ul role="tablist">
+                <li><a href="#home" role="tab" title="Bendra statistika"><i class="fa fa-bars"></i></a></li>
+                <li><a href="#globe" role="tab" title="Susirgimų atvejai pasaulyje"><i class="fa fa-globe"></i></a></li>
+                <li><a href="#lit" role="tab" title="Susirgimų atvejai Lietuvoje"><img style="width: 16px;" alt="Lietuvos vėliava" src="img/lt.png"></a></li>
+                <li><a href="#info" role="tab" title="Apie projektą"><i class="fa fa-info-circle"></i></a></li>
+                <li><a href="mailto: info@koronamap.lt" role="tab" title="Susisiekite"><i class="fa fa-envelope"></i></a></li>
+                <li><a href="https://www.buymeacoffee.com/ORsPzax" title="Nupirkite man kavos"><img style="width: 20px;" alt="Nupirkite man kavos" src="img/coffee-buy.png"></a></li>
+            </ul>
+            <!--
+            <ul role="tablist">
+                <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
+            </ul>
+        -->
+        </div>
+
+        <!-- Tab panes -->
+        <div class="sidebar-content">
+            <div class="sidebar-pane" id="home">
+                <h2 class="sidebar-header">
+                    Bendra statistika
+                    <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+                </h2>
+                <h2 class="centras">Lietuvoje</h2>
+                <p id="date" class="centras infobar"></p>
+				<div class="cotainer">
+					<div class="row">
+						<div class="col-6"><div class="map-sidebar-card cases" data-text="Susirgimai"></div></div>
+						<div class="col-6"><div class="map-sidebar-card todayCases" data-text="Šiandien susirgo"></div></div>
+						<div class="col-12"><div class="map-sidebar-card lactive" data-text="Aktyvūs atvejai"></div></div>
+						<div class="col-6"><div class="map-sidebar-card recovered" data-text="Pasveiko"></div></div>
+						<div class="col-6"><div class="map-sidebar-card deaths" data-text="Mirė"></div></div>
+						<div class="col-6"><div class="map-sidebar-card todayDeaths" data-text="Šiandien mirė"></div></div>
+						<div class="col-6"><div class="map-sidebar-card critical" data-text="Kritinės būklės"></div></div>
+					</div>
+				</div>
+				<h2 class="centras">Pasaulyje</h2>
+				<div class="container">
+				<div class="row">
+					<div class="col-12"><div class="map-sidebar-card wcases" data-text="Susirgimai"></div></div>
+					<div class="col-12"><div class="map-sidebar-card wrecovered" data-text="Pasveiko"></div></div>
+					<div class="col-12"><div class="map-sidebar-card wdeaths" data-text="Mirė"></div></div>
+				</div>
+			</div>
+            </div>
+
+            <div class="sidebar-pane" id="globe">
+                <h1 class="sidebar-header">Susirgimų atvejai pasaulyje<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+                <div class="table-responsive">
+                <table class="table">
+				  <thead>
+				    <tr class="balta">
+				      <th>Šalis</th>
+				      <th>Susirgimai</th>
+				      <th>Pasveiko</th>
+				      <th>Mirtys</th>
+				    </tr>
+				  </thead>
+				  <tbody id="statist" class="balta">
+				  </tbody>
+				</table>
+			</div>
+            </div>
+
+            <div class="sidebar-pane" id="lit">
+                <h1 class="sidebar-header">Susirgimų atvejai Lietuvoje<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+                <div class="table-responsive">
+                <table class="table">
+				  <thead>
+				    <tr class="balta">
+				      <th>Miestas</th>
+				      <th>Susirgimai</th>
+				      <th>Pasveiko</th>
+				      <th>Mirtys</th>
+				    </tr>
+				  </thead>
+				  <tbody class="balta" id="ltstat">
+
+				  </tbody>
+				</table>
+			</div>
+            </div>
+
+            <div class="sidebar-pane" id="info">
+                <h2 class="sidebar-header">Apie projektą<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h2>
+                <p class="tekstas pt-2">Šiame puslapyje pateikiama patvirtinto naujojo koronaviruso atvejai Lietuvoje ir pasaulyje. Visa informacija yra atnaujinama automatiškai kas 30 minučių. Žymėjimai žemėlapyje gali neatitikti tikslios informacijos, todėl ji visados yra atnaujinama. Šį žemėlapį sukūrė - Gvidas Ulozevičius.</p>
+                <h2 class="sidebar-header">Duomenys</h2>
+                <p class="tekstas pt-2">Patvirtintų atvejų skaičius Lietuvoje yra atnaujinamas <a title="Lietuvos Sveikatos apsaugos ministerija (SAM)" href="http://sam.lrv.lt/">Lietuvos Sveikatos apsaugos ministerijos (SAM)</a> duomenimis.</p>
+                <p class="tekstas">Patvirtintų atvejų skaičius pasaulyje yra atnaujinamas naudojant <a title="NovelCOVID/API" href="https://corona.lmao.ninja/">NovelCOVID/API</a></p>
+                <h2 class="sidebar-header">Pagalba</h2>
+                <p class="tekstas pt-2">Turite tobulinimo idėjų ar norite padėti įgyvendinti projektą? Kreipkitės el. Paštu. info@koronamap.lt</p>
+                <h1 class="sidebar-header">Informacija apie koronavirusą</h1>
+                <p class="tekstas pt-2">Norėdami sužinoti daugiau faktų ir informacijos apie naująjį koronosvirusą SARS-CoV-2 (Covid-19), skaitykite daugiau apie tai <a title="koronastop" href="http://www.koronastop.lt/">Lietuvos Respublikos sveikatos apsaugos ministerijos</a> tinklalapyje.</p>
+                <style>.bmc-button img{height: 34px !important;width: 35px !important;margin-bottom: 1px !important;box-shadow: none !important;border: none !important;vertical-align: middle !important;}.bmc-button{padding: 7px 10px 7px 10px !important;line-height: 35px !important;height:51px !important;min-width:217px !important;text-decoration: none !important;display:inline-flex !important;color:#FFFFFF !important;background-color:#FF813F !important;border-radius: 5px !important;border: 1px solid transparent !important;padding: 7px 10px 7px 10px !important;font-size: 20px !important;letter-spacing:-0.08px !important;box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;margin: 0 auto !important;font-family:'Lato', sans-serif !important;-webkit-box-sizing: border-box !important;box-sizing: border-box !important;-o-transition: 0.3s all linear !important;-webkit-transition: 0.3s all linear !important;-moz-transition: 0.3s all linear !important;-ms-transition: 0.3s all linear !important;transition: 0.3s all linear !important;}.bmc-button:hover, .bmc-button:active, .bmc-button:focus {-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;text-decoration: none !important;box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;opacity: 0.85 !important;color:#FFFFFF !important;}</style><link href="https://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext" rel="stylesheet"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/ORsPzax"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="Nupirkite man kavos"><span style="margin-left:15px;font-size:19px !important;">Nupirkite man kavos</span></a>
+            </div>
+
+            <div class="sidebar-pane" id="settings">
+                <h2 class="sidebar-header">Settings<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h2>
+            </div>
+        </div>
+    </div>
+
+    <leaflet center="center" events="events" legend="legend" defaults="defaults" geojson="geojson"></leaflet>
+    <div id="map" class="sidebar-map"></div>
+
+    <script src="js/leaflet-sidebar.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="js/main.js?v=1.8"></script>
+</body>
+</html>
